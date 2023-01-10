@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from "react-native";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -9,28 +9,52 @@ import HomeScreen from "./screens/HomeScreen";
 import MovieScreen from "./screens/MovieScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 
-export default function App() {
-  return (
-    // <View style={styles.container}>
-    //   <Home />
-    // </View>
 
+export default function App() {
+
+
+
+
+
+  return (
+ 
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ headerShown:false}}
+          options={{
+            title: "Movies",
+            headerTitleAlign:"center",
+            headerStyle:{
+              
+              backgroundColor: "whitesmoke",
+            },
+          }}
         />
         <Stack.Screen
           name="MovieScreen"
           component={MovieScreen}
-          options={{ title: "Movie" }}
+          options={{
+            title: "Movie Info",
+            headerTitleAlign:"center",
+            headerStyle:{
+              
+              backgroundColor: "whitesmoke",
+            },
+          }}
         />
          <Stack.Screen
           name="FavoritesScreen"
           component={FavoritesScreen}
-          options={{ title: "FavoritesScreen" }}
+          options={{
+            title: "Favorites",
+            headerTitleAlign:"center",
+            headerStyle:{
+              
+              backgroundColor: "whitesmoke",
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -40,7 +64,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     marginTop: StatusBar.currentHeight,
   },
 });

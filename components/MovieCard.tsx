@@ -1,19 +1,27 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {  Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
+
+//per risolvere can't find variable:navigation
+import { useNavigation } from '@react-navigation/native'
+
 
 interface MovieProps {
   id: number;
   title: string;
   rating: number;
-  cover?: string;
+  cover: string;
+ 
 }
 
-const SingleMovie = ({ id, title, rating, cover }: MovieProps) => {
+
+
+const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
   const [movieDetails, setMovieDetails] = useState();
   const [fetchedDetails, setFetchedDetails] = useState(false);
 
 
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetch(
@@ -21,15 +29,19 @@ const SingleMovie = ({ id, title, rating, cover }: MovieProps) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setMovieDetails(data);
         setFetchedDetails(true);
-        console.log(movieDetails, fetchedDetails, id);
+        // console.log(movieDetails, fetchedDetails, id);
       });
   }, [fetchedDetails]); //per evitare l'errore del caricamento dell'app prima del fetch
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+            // @ts-ignore
+            onPress={()=>navigation.navigate("MovieScreen",{id: id, title: title, overview: movieDetails.overview, backDrop: ` https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`})}
+
+    >
       <View style={styles.container}>
         <Image style={styles.cover} source={{ uri: cover }} />
 
@@ -57,7 +69,7 @@ const SingleMovie = ({ id, title, rating, cover }: MovieProps) => {
   );
 };
 
-export default SingleMovie;
+export default MovieCard;
 
 const styles = StyleSheet.create({
   container: {
