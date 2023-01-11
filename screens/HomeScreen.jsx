@@ -18,6 +18,8 @@ const HomeScreen = () => {
   const [movies, setMovies] = useState();
   const [fetched, setFetched] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  
+  
 
   const navigation = useNavigation();
 

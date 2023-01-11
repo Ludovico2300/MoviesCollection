@@ -11,6 +11,7 @@ interface MovieProps {
   title: string;
   rating: number;
   cover: string;
+
  
 }
 
@@ -19,7 +20,6 @@ interface MovieProps {
 const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
   const [movieDetails, setMovieDetails] = useState();
   const [fetchedDetails, setFetchedDetails] = useState(false);
-
 
   const navigation = useNavigation();
 
@@ -36,10 +36,12 @@ const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
       });
   }, [fetchedDetails]); //per evitare l'errore del caricamento dell'app prima del fetch
 
+
+
   return (
     <TouchableOpacity
             // @ts-ignore
-            onPress={()=>navigation.navigate("MovieScreen",{id: id, title: title, overview: movieDetails.overview, backDrop: ` https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`})}
+            onPress={()=>navigation.navigate("MovieScreen",{id: id, title: title, overview: movieDetails.overview, backDrop: ` https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`, cover: cover, rating: rating, date: movieDetails.release_date})}
 
     >
       <View style={styles.container}>
