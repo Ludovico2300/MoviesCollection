@@ -50,8 +50,6 @@ const HomeScreen = () => {
       .then((response) => response.json())
       .then((data) => {
         setMovies((prevMovies) => [...prevMovies, ...data.results]); //quando viene caricata la nuova pagina, perdo dei dettagli di film, probabilmente il fetch è più veloce del render
-
-        // console.log(movies, fetched);
       });
   };
 

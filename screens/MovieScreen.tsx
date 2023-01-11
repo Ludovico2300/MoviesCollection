@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //per risolvere can't find variable:navigation
 import { useNavigation } from "@react-navigation/native";
 
@@ -72,8 +72,9 @@ const MovieScreen = ({ navigation, route }) => {
         alert("Removed from Favorites");
         for (let i = 0; i < favMovies.length; i++) {
           if (favMovies[i].title === movie.title) {
+            //controllo se il titolo del film è uguale all'elemento nel loop
             console.log(favMovies[i].title);
-            favMovies.splice(i, 1);
+            favMovies.splice(i, 1); //partendo dall'indice di ricerca (primo parametro) rimuovi 1 elemento (secondo parametro)
             await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
           }
         }
