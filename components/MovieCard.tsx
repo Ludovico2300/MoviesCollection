@@ -1,21 +1,16 @@
-import {  Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 
 //per risolvere can't find variable:navigation
-import { useNavigation } from '@react-navigation/native'
-
+import { useNavigation } from "@react-navigation/native";
 
 interface MovieProps {
   id: number;
   title: string;
   rating: number;
   cover: string;
-
- 
 }
-
-
 
 const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
   const [movieDetails, setMovieDetails] = useState();
@@ -25,7 +20,7 @@ const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
 
   useEffect(() => {
     fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=a74169393e0da3cfbc2c58c5feec63d7`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=a74169393e0da3cfbc2c58c5feec63d7`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -36,13 +31,23 @@ const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
       });
   }, [fetchedDetails]); //per evitare l'errore del caricamento dell'app prima del fetch
 
-
-
   return (
     <TouchableOpacity
-            // @ts-ignore
-            onPress={()=>navigation.navigate("MovieScreen",{id: id, title: title, overview: movieDetails.overview, backDrop: ` https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`, cover: cover, rating: rating, date: movieDetails.release_date})}
-
+      onPress={() =>
+        // @ts-ignore
+        navigation.navigate("MovieScreen", {
+          id: id,
+          title: title,
+          // @ts-ignore
+          overview: movieDetails.overview,
+          // @ts-ignore
+          backDrop: `https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`,
+          cover: cover,
+          rating: rating,
+          // @ts-ignore
+          date: movieDetails.release_date,
+        })
+      }
     >
       <View style={styles.container}>
         <Image style={styles.cover} source={{ uri: cover }} />
@@ -54,18 +59,18 @@ const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
 
           <View style={styles.subDetails}>
             <View style={styles.date}>
-              <AntDesign name="calendar" size={15} color="black" />
+              <AntDesign name='calendar' size={15} color='black' />
               {/* probabile errore di typescript, tipizzazione del risultato */}
               {/* @ts-ignore */}
               {movieDetails && <Text>{movieDetails?.release_date}</Text>}
             </View>
             <View style={styles.rating}>
-              <AntDesign name="staro" size={15} color="black" />
+              <AntDesign name='staro' size={15} color='black' />
               <Text>{rating}</Text>
             </View>
           </View>
         </View>
-        <AntDesign name="right" size={24} color="lightgrey" />
+        <AntDesign name='right' size={24} color='lightgrey' />
       </View>
     </TouchableOpacity>
   );
@@ -92,8 +97,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
     margin: 5,
-    // alignItems: "flex-start",
-    justifyContent:"center"
+    justifyContent: "center",
   },
   title: {
     fontWeight: "bold",
