@@ -40,18 +40,44 @@ const MovieScreen = ({ navigation, route }) => {
 
   const navigation1 = useNavigation();
 
+  // controllo se il film è già presente nei preferiti
+  //@ts-ignore
+  const containsObject = (obj, list) => {
+    var i;
+    for (i = 0; i < list.length; i++) {
+      if (list[i].title === obj.title) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   // @ts-ignore
   const storeData = async (movie) => {
     try {
       const jsonValueFavorites = await AsyncStorage.getItem("fav");
-      console.log(jsonValueFavorites);
+      // console.log(jsonValueFavorites);
       let favMovies = [];
       if (jsonValueFavorites) {
         favMovies = JSON.parse(jsonValueFavorites);
       }
-      favMovies.push(movie);
-      await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
-      alert("Added to Favorites!");
+      let check = containsObject(movie, favMovies);
+      console.log(check);
+      //@ts-ignore
+      if (check === false) {
+        favMovies.push(movie);
+        alert("Added to Favorites!");
+        await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+      } else {
+        alert("Removed from Favorites");
+        for (let i = 0; i < favMovies.length; i++) {
+          if (favMovies[i].title === movie.title) {
+            console.log(favMovies[i].title);
+            favMovies.splice(i, 1);
+            await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+          }
+        }
+      }
     } catch (e) {
       console.log(e);
     }

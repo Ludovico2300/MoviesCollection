@@ -16,8 +16,6 @@ const FavoritesScreen = () => {
     } catch (e) {
       console.log(e);
     }
-
-    console.log("done", favorites);
   };
 
   useEffect(() => {
