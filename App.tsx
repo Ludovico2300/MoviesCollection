@@ -1,9 +1,6 @@
 import {
   StyleSheet,
-  Text,
-  View,
   StatusBar,
-  TouchableOpacity,
 } from "react-native";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";

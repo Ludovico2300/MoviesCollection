@@ -12,11 +12,18 @@ interface MovieProps {
   cover: string;
 }
 
-const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
-  const [movieDetails, setMovieDetails] = useState();
-  const [fetchedDetails, setFetchedDetails] = useState(false);
+interface MovieDetails {
+  overview: string;
+  backdrop_path: string;
+  release_date: number;
+}
 
-  const navigation = useNavigation();
+
+const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
+  const [movieDetails, setMovieDetails] = useState<MovieDetails>();
+  const [fetchedDetails, setFetchedDetails] = useState<boolean>(false);
+
+  const navigation :any = useNavigation();
 
   useEffect(() => {
     fetch(
@@ -24,44 +31,34 @@ const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
         setMovieDetails(data);
         setFetchedDetails(true);
-        // console.log(movieDetails, fetchedDetails, id);
       });
   }, [fetchedDetails]); //per evitare l'errore del caricamento dell'app prima del fetch
 
   return (
     <TouchableOpacity
       onPress={() =>
-        // @ts-ignore
         navigation.navigate("MovieScreen", {
           id: id,
           title: title,
-          // @ts-ignore
-          overview: movieDetails.overview,
-          // @ts-ignore
-          backDrop: `https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`,
+          overview: movieDetails?.overview,
+          backDrop: `https://image.tmdb.org/t/p/w500${movieDetails?.backdrop_path}`,
           cover: cover,
           rating: rating,
-          // @ts-ignore
-          date: movieDetails.release_date,
+          date: movieDetails?.release_date,
         })
       }
     >
       <View style={styles.container}>
         <Image style={styles.cover} source={{ uri: cover }} />
-
         <View style={styles.infoContainer}>
           <View>
             <Text style={styles.title}>{title}</Text>
           </View>
-
           <View style={styles.subDetails}>
             <View style={styles.date}>
               <AntDesign name='calendar' size={15} color='black' />
-              {/* probabile errore di typescript, tipizzazione del risultato */}
-              {/* @ts-ignore */}
               {movieDetails && <Text>{movieDetails?.release_date}</Text>}
             </View>
             <View style={styles.rating}>
