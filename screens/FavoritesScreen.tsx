@@ -1,18 +1,25 @@
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+interface Favorite{
+  id: number;
+  title: string;
+  rating: number;
+  cover: string;
+}
+
 const FavoritesScreen = () => {
-  const [favorites, setFavorites] = useState([]);
-  const [getted, setGetted] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const [favorites, setFavorites] = useState<any|Favorite>();
+  const [getted, setGetted] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const getFavorites = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem("fav");
-      //@ts-ignore
+      const jsonValue : string|any = await AsyncStorage.getItem("fav");
+      // console.log(typeof(jsonValue)); //string
       setFavorites(JSON.parse(jsonValue));
     } catch (e) {
       console.log(e);
@@ -30,28 +37,37 @@ const FavoritesScreen = () => {
   };
 
   //creo il render item per poter usare FlatList
-  //@ts-ignore
-  const renderItem = ({ item }) => {
-    return (
-      <MovieCard
+  
+  const renderItem : any= ({ item }: {item:Favorite}) => {
+     return (<MovieCard
         key={`${item.id}+${Date.now()}`}
         id={item.id}
         title={item.title}
         rating={item.rating}
         cover={`https://image.tmdb.org/t/p/w500${item.cover}`}
-      />
-    );
+      />)
   };
+
+    
 
   return (
     <View>
-      <FlatList
+        {// se favorites ha dati esegue il flatlist, altrimenti il text
+        favorites ? 
+        <FlatList
         data={favorites}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         refreshing={refreshing}
         onRefresh={handleRefresh}
-      />
+      /> 
+      : <Text>No Data...</Text>
+      }
+       
+       
+
+      
+       
     </View>
   );
 };
