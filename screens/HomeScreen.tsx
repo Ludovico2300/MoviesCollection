@@ -14,12 +14,21 @@ import MovieCard from "../components/MovieCard";
 
 import { useNavigation } from "@react-navigation/native";
 
-const HomeScreen = () => {
-  const [movies, setMovies] = useState([]);
-  const [fetched, setFetched] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const navigation = useNavigation();
+
+interface Movie{
+  index?: number;
+  id: number;
+  title: string;
+  vote_average: number;
+  poster_path: string;
+}
+
+const HomeScreen = () => {
+  const [movies, setMovies] = useState<any|Movie[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const navigation:any= useNavigation();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,7 +58,7 @@ const HomeScreen = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        setMovies((prevMovies) => [...prevMovies, ...data.results]); //quando viene caricata la nuova pagina, perdo dei dettagli di film, probabilmente il fetch è più veloce del render
+        setMovies((prevMovies:Movie[]) => [...prevMovies, ...data.results]); //quando viene caricata la nuova pagina, perdo dei dettagli di film, probabilmente il fetch è più veloce del render
       });
   };
 
@@ -64,11 +73,11 @@ const HomeScreen = () => {
   }, [currentPage]); //per evitare l'errore del caricamento dell'app prima del fetch
 
   //creo il render item per poter usare FlatList
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }:{item:Movie}) => {
     return (
       <MovieCard
-        key={`${item.id}+${Date.now()}`}
-        id={item.id}
+      key={`${item.id}&&${Date.now()}`}
+      id={item.id}
         title={item.title}
         rating={item.vote_average}
         cover={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
@@ -81,7 +90,8 @@ const HomeScreen = () => {
       <FlatList
         data={movies}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        //@ts-ignore
+        keyExtractor={item=> item.id} //errore ts, non capisco
         ListFooterComponent={renderLoader}
         onEndReached={onBottomReached}
         onEndReachedThreshold={0}

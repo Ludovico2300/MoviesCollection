@@ -40,7 +40,7 @@ const FavoritesScreen = () => {
   
   const renderItem : any= ({ item }: {item:Favorite}) => {
      return (<MovieCard
-        key={`${item.id}+${Date.now()}`}
+        key={`${item.id}&&${Date.now()}`}
         id={item.id}
         title={item.title}
         rating={item.rating}
@@ -63,11 +63,7 @@ const FavoritesScreen = () => {
       /> 
       : <Text>No Data...</Text>
       }
-       
-       
-
       
-       
     </View>
   );
 };

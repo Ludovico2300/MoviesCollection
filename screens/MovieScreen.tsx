@@ -26,7 +26,7 @@ interface DataInterface {
 //@ts-ignore
 const MovieScreen = ({ navigation, route }) => {
   const layoutx = useWindowDimensions().width;
-  const [color, setColor] = useState("black");
+  const [color, setColor] = useState<string>("black");
 
   const data: DataInterface = {
     id: route.params.id,
@@ -45,6 +45,7 @@ const MovieScreen = ({ navigation, route }) => {
   const containsObject = (obj, list) => {
     var i;
     for (i = 0; i < list.length; i++) {
+      console.log(list.length);
       if (list[i].title === obj.title) {
         return true;
       }
@@ -52,18 +53,17 @@ const MovieScreen = ({ navigation, route }) => {
     return false;
   };
 
-  // @ts-ignore
+  //@ts-ignore
   const storeData = async (movie) => {
     try {
       const jsonValueFavorites = await AsyncStorage.getItem("fav");
-      // console.log(jsonValueFavorites);
-      let favMovies = [];
+      console.log(movie.typeof);
+      let favMovies : DataInterface[]= [];
       if (jsonValueFavorites) {
         favMovies = JSON.parse(jsonValueFavorites);
       }
-      let check = containsObject(movie, favMovies);
+      let check : boolean= containsObject(movie, favMovies);
       console.log(check);
-      //@ts-ignore
       if (check === false) {
         favMovies.push(movie);
         alert("Added to Favorites!");
@@ -89,7 +89,7 @@ const MovieScreen = ({ navigation, route }) => {
     navigation1.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          //@ts-ignore
+
           onPress={() => storeData(data)}
         >
           <AntDesign name='hearto' size={20} color={color} />
