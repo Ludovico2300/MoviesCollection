@@ -96,7 +96,7 @@ const MovieScreen = ({ navigation, route }) => {
           onPress={() => storeData(data)}
         >
           {/* @ts-ignore */}
-          <AntDesign name='hearto' size={20} color={ containsObject(data, favorites)===true ? 'red' : 'black' }/>
+          <AntDesign name='hearto' size={20} color={"black"}/>
         </TouchableOpacity>
       ),
     });
