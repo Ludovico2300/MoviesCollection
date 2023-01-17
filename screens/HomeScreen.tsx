@@ -35,6 +35,7 @@ const HomeScreen = () => {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => navigation.navigate("FavoritesScreen")}
+          testID="favoritesButtonID"
         >
           <Text>Favorites</Text>
         </TouchableOpacity>
@@ -86,7 +87,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.homeContainer}>
+    <View style={styles.homeContainer} testID="homeViewId">
       <FlatList
         data={movies}
         renderItem={renderItem}

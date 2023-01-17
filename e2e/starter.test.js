@@ -1,4 +1,4 @@
-describe('Example', () => {
+describe('Navigation Test', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -7,17 +7,19 @@ describe('Example', () => {
     await device.reloadReactNative();
   });
 
-  it('should have welcome screen', async () => {
-    await expect(element(by.id('welcome'))).toBeVisible();
+  it('should have HomeScreen / All Movies Screen', async () => {
+    await expect(element(by.id('homeViewId'))).toBeVisible();
   });
 
-  it('should show hello screen after tap', async () => {
-    await element(by.id('hello_button')).tap();
-    await expect(element(by.text('Hello!!!'))).toBeVisible();
+  it('should show Favorites Screen after tap', async () => {
+    await element(by.id('favoritesButtonID')).tap();
+    await expect(element(by.id('favoritesViewId'))).toBeVisible();
   });
 
-  it('should show world screen after tap', async () => {
-    await element(by.id('world_button')).tap();
-    await expect(element(by.text('World!!!'))).toBeVisible();
+  it('should show "The Godfather" Screen after tap', async () => {
+    await element(by.text('The Godfather')).tap();
+    await expect(element(by.id('movieViewId'))).toBeVisible();
   });
+
+
 });

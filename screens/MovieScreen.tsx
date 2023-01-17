@@ -102,7 +102,9 @@ const MovieScreen = ({ navigation, route }) => {
   }, [navigation1]);
 
   return (
-    <View>
+    <View
+    testID="movieViewId"
+    >
       <Image
         style={{ width: layoutx, height: layoutx, borderRadius: 5 }}
         source={{ uri: data.backDrop }}

@@ -51,7 +51,9 @@ const FavoritesScreen = () => {
     
 
   return (
-    <View>
+    <View
+    testID="favoritesViewId"
+    >
         {// se favorites ha dati esegue il flatlist, altrimenti il text
         favorites ? 
         <FlatList
@@ -61,7 +63,7 @@ const FavoritesScreen = () => {
         refreshing={refreshing}
         onRefresh={handleRefresh}
       /> 
-      : <Text>No Data...</Text>
+      : <Text style={styles.noFavTitle}>No Favorites...</Text>
       }
       
     </View>
@@ -70,4 +72,9 @@ const FavoritesScreen = () => {
 
 export default FavoritesScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  noFavTitle:{
+    fontWeight: "bold",
+    fontSize: 20,
+  }
+});
