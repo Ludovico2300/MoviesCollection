@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import  React, { useEffect, useState } from "react";
 
 //per risolvere can't find variable:navigation
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +19,7 @@ interface MovieDetails {
 }
 
 
-const MovieCard = ({ id, title, rating, cover }: MovieProps) => {
+function MovieCard ({ id, title, rating, cover }: MovieProps) :JSX.Element {
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
   const [fetchedDetails, setFetchedDetails] = useState<boolean>(false);
 

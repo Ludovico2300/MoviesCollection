@@ -63,46 +63,31 @@ const MovieScreen = ({ navigation, route }) => {
       }
       let check : boolean= containsObject(movie, favMovies);
       console.log(check);
-      if (check === false) {
-        favMovies.push(movie);
-        alert("Added to Favorites!");
-        await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
-      } else {
-        alert("Removed from Favorites");
-        for (let i = 0; i < favMovies.length; i++) {
-          if (favMovies[i].title === movie.title) {
-            //controllo se il titolo del film è uguale all'elemento nel loop
-            console.log(favMovies[i].title);
-            favMovies.splice(i, 1); //partendo dall'indice di ricerca (primo parametro) rimuovi 1 elemento (secondo parametro)
-            await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+      if (favMovies) {
+        if (check === false) {
+          favMovies.push(movie);
+          alert("Added to Favorites!");
+          await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+        } else {
+          alert("Removed from Favorites");
+          for (let i = 0; i < favMovies?.length; i++) {
+            if (favMovies[i].title === movie.title) {
+              //controllo se il titolo del film è uguale all'elemento nel loop
+              console.log(favMovies[i].title);
+              favMovies.splice(i, 1); //partendo dall'indice di ricerca (primo parametro) rimuovi 1 elemento (secondo parametro)
+              await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+            }
           }
         }
       }
+         
     } catch (e) {
       console.log(e);
     }
   };
 
-   //@ts-ignore
-   const isFavorites = async (movie) => {
-    try {
-      const jsonValueFavorites = await AsyncStorage.getItem("fav");
-      let favMovies : DataInterface[]= [];
-      if (jsonValueFavorites) {
-        favMovies = JSON.parse(jsonValueFavorites);
-      }
-      let check : boolean= containsObject(movie, favMovies);
-      console.log(check);
-      if (check === false) {
-       return false
-      } else {
-       return true
-        }
-      }
-     catch (e) {
-      console.log(e);
-    }
-  };
+ 
+   
 
   //add "Favorite Heart to Movie Info Screen Header"
   React.useLayoutEffect(() => {
@@ -113,7 +98,7 @@ const MovieScreen = ({ navigation, route }) => {
           onPress={() => storeData(data)}
         >
           {/* @ts-ignore */}
-          <AntDesign name='hearto' size={20} color={ isFavorites(data)===true ? 'red' : 'black' } />
+          <AntDesign name='hearto' size={20} color={ containsObject(data, favorites)===true ? 'red' : 'black' }/>
         </TouchableOpacity>
       ),
     });
