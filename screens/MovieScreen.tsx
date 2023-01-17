@@ -26,7 +26,6 @@ interface DataInterface {
 //@ts-ignore
 const MovieScreen = ({ navigation, route }) => {
   const layoutx = useWindowDimensions().width;
-  const [color, setColor] = useState<string>("black");
 
   const data: DataInterface = {
     id: route.params.id,
@@ -84,6 +83,27 @@ const MovieScreen = ({ navigation, route }) => {
     }
   };
 
+   //@ts-ignore
+   const isFavorites = async (movie) => {
+    try {
+      const jsonValueFavorites = await AsyncStorage.getItem("fav");
+      let favMovies : DataInterface[]= [];
+      if (jsonValueFavorites) {
+        favMovies = JSON.parse(jsonValueFavorites);
+      }
+      let check : boolean= containsObject(movie, favMovies);
+      console.log(check);
+      if (check === false) {
+       return false
+      } else {
+       return true
+        }
+      }
+     catch (e) {
+      console.log(e);
+    }
+  };
+
   //add "Favorite Heart to Movie Info Screen Header"
   React.useLayoutEffect(() => {
     navigation1.setOptions({
@@ -92,7 +112,8 @@ const MovieScreen = ({ navigation, route }) => {
 
           onPress={() => storeData(data)}
         >
-          <AntDesign name='hearto' size={20} color={color} />
+          {/* @ts-ignore */}
+          <AntDesign name='hearto' size={20} color={ isFavorites(data)===true ? 'red' : 'black' } />
         </TouchableOpacity>
       ),
     });
