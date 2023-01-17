@@ -39,7 +39,7 @@ const MovieScreen = ({ navigation, route }) => {
 
   const navigation1 = useNavigation();
 
-  // controllo se il film è già presente nei preferiti
+  // controllo se il film è già presente nei preferiti.
   //@ts-ignore
   const containsObject = (obj, list) => {
     var i;
@@ -80,14 +80,12 @@ const MovieScreen = ({ navigation, route }) => {
           }
         }
       }
-         
     } catch (e) {
       console.log(e);
     }
   };
 
  
-   
 
   //add "Favorite Heart to Movie Info Screen Header"
   React.useLayoutEffect(() => {
