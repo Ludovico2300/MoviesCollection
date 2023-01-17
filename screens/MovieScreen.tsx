@@ -92,7 +92,6 @@ const MovieScreen = ({ navigation, route }) => {
     navigation1.setOptions({
       headerRight: () => (
         <TouchableOpacity
-
           onPress={() => storeData(data)}
         >
           {/* @ts-ignore */}

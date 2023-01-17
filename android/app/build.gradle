@@ -147,6 +147,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
+        testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
@@ -235,6 +237,8 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+
         }
     }
 
@@ -275,6 +279,9 @@ android {
 }
 
 dependencies {
+    androidTestImplementation('com.wix:detox:+')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion
@@ -283,27 +290,27 @@ dependencies {
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
     def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";
-    def frescoVersion = rootProject.ext.frescoVersion
+    // def frescoVersion = rootProject.ext.frescoVersion
 
-    // If your app supports Android versions before Ice Cream Sandwich (API level 14)
-    if (isGifEnabled || isWebpEnabled) {
-        implementation "com.facebook.fresco:fresco:${frescoVersion}"
-        implementation "com.facebook.fresco:imagepipeline-okhttp3:${frescoVersion}"
-    }
+    // // If your app supports Android versions before Ice Cream Sandwich (API level 14)
+    // if (isGifEnabled || isWebpEnabled) {
+    //     implementation "com.facebook.fresco:fresco:${frescoVersion}"
+    //     implementation "com.facebook.fresco:imagepipeline-okhttp3:${frescoVersion}"
+    // }
 
-    if (isGifEnabled) {
-        // For animated gif support
-        implementation "com.facebook.fresco:animated-gif:${frescoVersion}"
-    }
+    // if (isGifEnabled) {
+    //     // For animated gif support
+    //     implementation "com.facebook.fresco:animated-gif:${frescoVersion}"
+    // }
 
-    if (isWebpEnabled) {
-        // For webp support
-        implementation "com.facebook.fresco:webpsupport:${frescoVersion}"
-        if (isWebpAnimatedEnabled) {
-            // Animated webp support
-            implementation "com.facebook.fresco:animated-webp:${frescoVersion}"
-        }
-    }
+    // if (isWebpEnabled) {
+    //     // For webp support
+    //     implementation "com.facebook.fresco:webpsupport:${frescoVersion}"
+    //     if (isWebpAnimatedEnabled) {
+    //         // Animated webp support
+    //         implementation "com.facebook.fresco:animated-webp:${frescoVersion}"
+    //     }
+    // }
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
