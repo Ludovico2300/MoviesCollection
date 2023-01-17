@@ -103,7 +103,7 @@ const MovieScreen = ({ navigation, route }) => {
 
   return (
     <View
-    testID="movieViewId"
+    testID={`${data.title}-movieViewId`}
     >
       <Image
         style={{ width: layoutx, height: layoutx, borderRadius: 5 }}

@@ -18,7 +18,7 @@ describe('Navigation Test', () => {
 
   it('should show "The Godfather" Screen after tap', async () => {
     await element(by.text('The Godfather')).tap();
-    await expect(element(by.id('movieViewId'))).toBeVisible();
+    await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
   });
 
 
