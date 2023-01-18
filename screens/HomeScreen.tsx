@@ -89,6 +89,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.homeContainer} testID="homeViewId">
       <FlatList
+        testID="homeFlatListId"
         data={movies}
         renderItem={renderItem}
         //@ts-ignore
