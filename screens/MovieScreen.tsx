@@ -39,6 +39,7 @@ const MovieScreen = ({ navigation, route }) => {
 
   const navigation1 = useNavigation();
 
+
   // controllo se il film è già presente nei preferiti.
   //@ts-ignore
   const containsObject = (obj, list) => {

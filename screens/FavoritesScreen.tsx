@@ -57,6 +57,7 @@ const FavoritesScreen = () => {
         {// se favorites ha dati esegue il flatlist, altrimenti il text
         favorites ? 
         <FlatList
+        testID="favoritesFlatListId"
         data={favorites}
         renderItem={renderItem}
         keyExtractor={item => item.id}
