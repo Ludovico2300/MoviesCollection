@@ -88,7 +88,7 @@ const MovieScreen = ({ navigation, route }) => {
 
  
 
-  //add "Favorite Heart to Movie Info Screen Header"
+  //add "Favorite Heart" to Movie Info Screen Header
   React.useLayoutEffect(() => {
     navigation1.setOptions({
       headerRight: () => (
@@ -98,6 +98,21 @@ const MovieScreen = ({ navigation, route }) => {
         >
           {/* @ts-ignore */}
           <AntDesign name='hearto' size={20} color={"black"}/>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation1]);
+
+   //add "Back Arrow" to Movie Info Screen Header
+   React.useLayoutEffect(() => {
+    navigation1.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          testID="goBackBtn"
+        >
+          {/* @ts-ignore */}
+          <AntDesign name='leftcircleo' size={20} color={"black"}/>
         </TouchableOpacity>
       ),
     });
