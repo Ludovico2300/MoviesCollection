@@ -109,7 +109,7 @@ describe('Favorites Test', () => {
     await element(by.text('OK')).tap();
   });
 
-  it('should remove The Godfather from FavoriteList from Screen', async () => {
+  it('should remove The Godfather from FavoriteList and refresh the screen', async () => {
     await element(by.id('favoritesButtonID')).tap();
     await expect(element(by.id('favoritesViewId'))).toExist();
     await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
@@ -117,12 +117,11 @@ describe('Favorites Test', () => {
     await element(by.id('addFavoriteBtn')).tap();
     await expect(element(by.text('Removed from Favorites'))).toBeVisible();
     await element(by.text('OK')).tap();
+    await element(by.id('goBackBtn')).tap();
+    await expect(element(by.id('favoritesFlatListId'))).toBeVisible();
+    await element(by.id('favoritesFlatListId')).swipe("down","slow", NaN, 0.5, 0.8);
+    await expect(element(by.text('The Godfather'))).not.toExist();
   });
   
-  it('should show Favorites Screen after tap and refreshing after scroll down', async () => {
-    await element(by.id('favoritesButtonID')).tap();
-    await expect(element(by.id('favoritesViewId'))).toBeVisible();
-    await element(by.id('favoritesFlatListId')).scroll(350, 'down', NaN, 0.85);
-  });
 
 });
