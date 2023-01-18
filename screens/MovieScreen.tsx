@@ -93,6 +93,7 @@ const MovieScreen = ({ navigation, route }) => {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => storeData(data)}
+          testID="addFavoriteBtn"
         >
           {/* @ts-ignore */}
           <AntDesign name='hearto' size={20} color={"black"}/>

@@ -49,9 +49,12 @@ function MovieCard ({ id, title, rating, cover }: MovieProps) :JSX.Element {
           date: movieDetails?.release_date,
         })
       }
-      testID="movieCardID"
+      testID={`${title}-movieCardBtnId`}
     >
-      <View style={styles.container}>
+      <View style={styles.container}
+      accessibilityLabel={`${title}-movieCardLbl`}
+      testID={`${title}-movieCardId`}
+      >
         <Image style={styles.cover} source={{ uri: cover }} />
         <View style={styles.infoContainer}>
           <View>
