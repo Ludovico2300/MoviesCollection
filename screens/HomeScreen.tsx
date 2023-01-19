@@ -114,6 +114,7 @@ const HomeScreen = () => {
         placeholder="Search for a film..."
         onChangeText={handleSearch}
         value={searchTerm}
+        testID="textFieldId"
       />
 
 
