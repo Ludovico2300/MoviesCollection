@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   TouchableOpacity,
+  TextInput
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
@@ -27,6 +28,10 @@ interface Movie{
 const HomeScreen = () => {
   const [movies, setMovies] = useState<any|Movie[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  //filtro i film
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredFilms, setFilteredFilms] = useState(movies);
 
   const navigation:any= useNavigation();
 
@@ -86,11 +91,35 @@ const HomeScreen = () => {
     );
   };
 
+ 
+  //inizio funzione filtro film
+  useEffect(() => {
+    setFilteredFilms(
+      movies.filter((movie: Movie) =>
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, movies]);
+
+
+  const handleSearch = (search: string) => {
+    setSearchTerm(search);
+  };
+//fine funzione filtro film
+
   return (
     <View className="flex" testID="homeViewId">
+
+<TextInput
+        placeholder="Search for a film..."
+        onChangeText={handleSearch}
+        value={searchTerm}
+      />
+
+
       <FlatList
         testID="homeFlatListId"
-        data={movies}
+        data={filteredFilms}
         renderItem={renderItem}
         //@ts-ignore
         keyExtractor={item=> item.id} //errore ts, non capisco

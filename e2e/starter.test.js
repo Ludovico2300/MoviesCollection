@@ -1,53 +1,53 @@
-// describe('Navigation Test', () => {
-//   beforeAll(async () => {
-//     await device.launchApp();
-//   });
+describe('Navigation Test', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
 
-//   beforeEach(async () => {
-//     await device.reloadReactNative();
-//   });
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
 
-//   it('should have HomeScreen / All Movies Screen', async () => {
-//     await expect(element(by.id('homeViewId'))).toBeVisible();
-//   });
+  it('should have HomeScreen / All Movies Screen', async () => {
+    await expect(element(by.id('homeViewId'))).toBeVisible();
+  });
 
-//   it('should show Favorites Screen after tap', async () => {
-//     await element(by.id('favoritesButtonID')).tap();
-//     await expect(element(by.id('favoritesViewId'))).toBeVisible();
-//   });
+  it('should show Favorites Screen after tap', async () => {
+    await element(by.id('favoritesButtonID')).tap();
+    await expect(element(by.id('favoritesViewId'))).toBeVisible();
+  });
 
-//   it('should show "The Godfather" Screen after tap', async () => {
-//     await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
-//     //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
-//     await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
-//   });
+  it('should show "The Godfather" Screen after tap', async () => {
+    await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
+    //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
+    await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
+  });
 
-//   it('should show "The Godfather Part II" Screen after tap', async () => {
-//     await element(by.id('The Godfather Part II-movieCardId').withAncestor(by.id('The Godfather Part II-movieCardBtnId'))).tap(); 
-//     await expect(element(by.id('The Godfather Part II-movieViewId'))).toBeVisible();
-//   });
+  it('should show "The Godfather Part II" Screen after tap', async () => {
+    await element(by.id('The Godfather Part II-movieCardId').withAncestor(by.id('The Godfather Part II-movieCardBtnId'))).tap(); 
+    await expect(element(by.id('The Godfather Part II-movieViewId'))).toBeVisible();
+  });
 
-//   it('should check if "The Godfather" Card is not visible when scrolling', async () => {
-//     // await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await element(by.id('homeFlatListId')).scroll(150, 'down');
-//     await expect(element(by.id('The Godfather-movieViewId'))).not.toBeVisible();
-//   });
+  it('should check if "The Godfather" Card is not visible when scrolling', async () => {
+    // await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
+    await expect(element(by.id('homeFlatListId'))).toBeVisible();
+    await element(by.id('homeFlatListId')).scroll(150, 'down');
+    await expect(element(by.id('The Godfather-movieViewId'))).not.toBeVisible();
+  });
 
-//   it('should check if "Spirited Away" Card is visible when scrolling', async () => {
-//     await expect(element(by.text('Spirited Away'))).not.toBeVisible();
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await element(by.id('homeFlatListId')).scroll(350, 'down');
-//     await expect(element(by.text('Spirited Away'))).toBeVisible();
-//   });  
+  it('should check if "Spirited Away" Card is visible when scrolling', async () => {
+    await expect(element(by.text('Spirited Away'))).not.toBeVisible();
+    await expect(element(by.id('homeFlatListId'))).toBeVisible();
+    await element(by.id('homeFlatListId')).scroll(350, 'down');
+    await expect(element(by.text('Spirited Away'))).toBeVisible();
+  });  
 
-//   it('should check if Movies are fetched when scrolling bottom', async () => {
-//     await expect(element(by.text('Cinema Paradiso'))).not.toBeVisible();
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await waitFor(element(by.text('Cinema Paradiso'))).toBeVisible().whileElement(by.id('homeFlatListId')).scroll(300, 'down');
-//   });  
+  it('should check if Movies are fetched when scrolling bottom', async () => {
+    await expect(element(by.text('Cinema Paradiso'))).not.toBeVisible();
+    await expect(element(by.id('homeFlatListId'))).toBeVisible();
+    await waitFor(element(by.text('Cinema Paradiso'))).toBeVisible().whileElement(by.id('homeFlatListId')).scroll(300, 'down');
+  });  
 
-// });
+});
 
 
 describe('Favorites Test', () => {

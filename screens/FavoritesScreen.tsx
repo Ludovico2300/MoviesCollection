@@ -65,7 +65,7 @@ const FavoritesScreen = () => {
         cover={`https://image.tmdb.org/t/p/w500${item.cover}`}
       />)
   };
-
+  
     
 
   return (
