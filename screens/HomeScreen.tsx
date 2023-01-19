@@ -87,7 +87,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.homeContainer} testID="homeViewId">
+    <View className="flex" testID="homeViewId">
       <FlatList
         testID="homeFlatListId"
         data={movies}

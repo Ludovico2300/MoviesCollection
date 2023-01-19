@@ -51,7 +51,9 @@ function MovieCard ({ id, title, rating, cover }: MovieProps) :JSX.Element {
       }
       testID={`${title}-movieCardBtnId`}
     >
-      <View style={styles.container}
+      <View 
+      // style={styles.container}
+      className="bg-transparent flex-1 flex-row m-2 py-2 items-center border-b-1.5 border-lightgrey-500"
       accessibilityLabel={`${title}-movieCardLbl`}
       testID={`${title}-movieCardId`}
       >
