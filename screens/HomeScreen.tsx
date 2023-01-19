@@ -107,5 +107,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
+    className: 'bg-blue-500 text-white',
   },
 });
