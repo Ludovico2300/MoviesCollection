@@ -11,11 +11,7 @@ import React, { useState, useEffect } from "react";
 
 import MovieCard from "../components/MovieCard";
 
-// in questa pagina ho avuto problemi con typescript...come in tutte le altre
-
 import { useNavigation } from "@react-navigation/native";
-
-
 
 interface Movie{
   index?: number;
@@ -91,7 +87,6 @@ const HomeScreen = () => {
     );
   };
 
- 
   //inizio funzione filtro film
   useEffect(() => {
     setFilteredFilms(
@@ -134,10 +129,3 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-  homeContainer: {
-    flex: 1,
-    className: 'bg-blue-500 text-white',
-  },
-});

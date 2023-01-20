@@ -176,7 +176,6 @@ describe('Filter Test', () => {
     await element(by.id('textFieldId')).clearText();
     await elementIdIsNotVisible("Parasite-movieCardId");
     await expect(element(by.id('textFieldId'))).toHaveText("");
-
   });
 
 

@@ -127,7 +127,7 @@ const MovieScreen = ({ navigation, route }) => {
         source={{ uri: data.backDrop }}
         resizeMode={"cover"}
       />
-      <Text style={styles.title}>{data.title}</Text>
+      <Text className="font-bold">{data.title}</Text>
 
       <Text>{data.overview}</Text>
     </View>
@@ -135,9 +135,3 @@ const MovieScreen = ({ navigation, route }) => {
 };
 
 export default MovieScreen;
-
-const styles = StyleSheet.create({
-  title: {
-    fontWeight: "bold",
-  },
-});
