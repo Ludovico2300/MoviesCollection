@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import  React, { useEffect, useState } from "react";
 
@@ -51,23 +51,22 @@ function MovieCard ({ id, title, rating, cover }: MovieProps) :JSX.Element {
       }
       testID={`${title}-movieCardBtnId`}
     >
-      <View 
-      // style={styles.container}
-      className="bg-transparent flex-1 flex-row m-2 py-2 items-center border-b-1.5 border-lightgrey-500"
+      <View className="bg-transparent flex-1 flex-row m-2 py-2 items-center border-b-2 border-black-500"
       accessibilityLabel={`${title}-movieCardLbl`}
       testID={`${title}-movieCardId`}
       >
-        <Image style={styles.cover} source={{ uri: cover }} />
-        <View style={styles.infoContainer}>
+        <Image className="w-20 h-20 rounded-md"
+        source={{ uri: cover }} />
+        <View className="flex-1 m-5 justify-center">
           <View>
-            <Text style={styles.title}>{title}</Text>
+            <Text className="font-bold text-lg mx-1">{title}</Text>
           </View>
-          <View style={styles.subDetails}>
-            <View style={styles.date}>
+          <View className="flex-1 flex-row">
+            <View className="flex-1 flex-row mx-1">
               <AntDesign name='calendar' size={15} color='black' />
               {movieDetails && <Text>{movieDetails?.release_date}</Text>}
             </View>
-            <View style={styles.rating}>
+            <View className="flex-1 flex-row mx-1">
               <AntDesign name='staro' size={15} color='black' />
               <Text>{rating}</Text>
             </View>
@@ -80,44 +79,3 @@ function MovieCard ({ id, title, rating, cover }: MovieProps) :JSX.Element {
 };
 
 export default MovieCard;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "trasparent",
-    flex: 1,
-    flexDirection: "row",
-    margin: 10,
-    paddingVertical: 10,
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "lightgrey",
-  },
-  cover: {
-    width: 80,
-    height: 80,
-    borderRadius: 5,
-  },
-  infoContainer: {
-    flex: 1,
-    margin: 5,
-    justifyContent: "center",
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  rating: {
-    flex: 1,
-    flexDirection: "row",
-    marginHorizontal: 2,
-  },
-  date: {
-    flex: 1,
-    flexDirection: "row",
-    marginHorizontal: 2,
-  },
-  subDetails: {
-    flex: 1,
-    flexDirection: "row",
-  },
-});

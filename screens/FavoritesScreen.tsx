@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View, Text,TouchableOpacity } from "react-native";
+import { FlatList, View, Text,TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import { AntDesign } from "@expo/vector-icons";
@@ -82,7 +82,7 @@ const FavoritesScreen = () => {
         refreshing={refreshing}
         onRefresh={handleRefresh}
       /> 
-      : <Text style={styles.noFavTitle}>No Favorites...</Text>
+      : <Text className="font-bold">No Favorites...</Text>
       }
       
     </View>
@@ -90,10 +90,3 @@ const FavoritesScreen = () => {
 };
 
 export default FavoritesScreen;
-
-const styles = StyleSheet.create({
-  noFavTitle:{
-    fontWeight: "bold",
-    fontSize: 20,
-  }
-});
