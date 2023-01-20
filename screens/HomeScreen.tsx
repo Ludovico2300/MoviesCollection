@@ -116,7 +116,7 @@ const HomeScreen = () => {
         value={searchTerm}
         testID="textFieldId"
       />
-
+<View>
 
       <FlatList
         testID="homeFlatListId"
@@ -128,6 +128,7 @@ const HomeScreen = () => {
         onEndReached={onBottomReached}
         onEndReachedThreshold={0}
       />
+      </View>
     </View>
   );
 };

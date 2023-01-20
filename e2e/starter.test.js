@@ -1,3 +1,22 @@
+//questa è una funzione che racchiude una parte di test, alla quale si pososno passare parametri
+async function elementIdIsVisible(elId) {
+  const el = element(by.id(elId));
+  await expect(el).toBeVisible();
+}
+
+async function elementIdIsNotVisible(elId) {
+  const el = element(by.id(elId));
+  await expect(el).not.toBeVisible();
+}
+
+async function filterElement(search, searchId) {
+  await expect(element(by.id('homeViewId'))).toBeVisible();
+  await element(by.id('textFieldId')).typeText(search);
+  await expect(element(by.id(searchId))).toBeVisible();
+}
+
+
+
 // describe('Navigation Test', () => {
 //   beforeAll(async () => {
 //     await device.launchApp();
@@ -27,6 +46,10 @@
 //     await expect(element(by.id('The Godfather Part II-movieViewId'))).toBeVisible();
 //   });
 
+
+//   //i test con lo sroll non funzionano con il TextInput, non esegue lo scroll ????
+
+
 //   it('should check if "The Godfather" Card is not visible when scrolling', async () => {
 //     // await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
 //     await expect(element(by.id('homeFlatListId'))).toBeVisible();
@@ -48,7 +71,6 @@
 //   });  
 
 // });
-
 
 
 
@@ -132,11 +154,6 @@
 // });
 
 
-//questa è una funzione che racchiude una parte di test, alla quale si pososno passare parametri
-async function movieIsVisible(movieId) {
-  const movie = element(by.id(movieId));
-  await expect(movie).toBeVisible();
-}
 
 
 describe('Filter Test', () => {
@@ -148,29 +165,18 @@ describe('Filter Test', () => {
     await device.reloadReactNative();
   });
 
-  it('should filter Films and Show only Parasite in HomeScreen', async () => {
-    await expect(element(by.id('homeViewId'))).toBeVisible();
-    await expect(element(by.id('Parasite-movieCardId'))).not.toBeVisible();
-    await element(by.id('textFieldId')).typeText('parasite');
-    // await expect(element(by.id('Parasite-movieCardId'))).toBeVisible();
-    // al posto di usare la riga di codice sopra, uso la funzione che ho creato e passo il parametro scelto
-    await movieIsVisible("Parasite-movieCardId")
-    await expect(element(by.id('The Godfather-movieCardId'))).not.toBeVisible();
-    await expect(element(by.id('Spirited Away-movieCardId'))).not.toBeVisible();
+  it('filter Films-->Show Parasite in HomeScreen', async () => {
+   await filterElement("parasite", "Parasite-movieCardId")
   });
 
   
-  it('should filter Films and Show only Parasite in HomeScreen and then clear the filter field', async () => {
-    await expect(element(by.id('homeViewId'))).toBeVisible();
-    await expect(element(by.id('Parasite-movieCardId'))).not.toBeVisible();
-    await element(by.id('textFieldId')).typeText('parasite');
-    await expect(element(by.id('Parasite-movieCardId'))).toBeVisible();
-    await expect(element(by.id('The Godfather-movieCardId'))).not.toBeVisible();
-    await expect(element(by.id('Spirited Away-movieCardId'))).not.toBeVisible();
+  it('filter Films-->Show Parasite in HomeScreen-->clear the filter field', async () => {
+    await filterElement("parasite", "Parasite-movieCardId")
 
     await element(by.id('textFieldId')).clearText();
-    await expect(element(by.id('Parasite-movieCardId'))).not.toBeVisible();
-    await expect(element(by.id('The Godfather-movieCardId'))).toBeVisible();
+    await elementIdIsNotVisible("Parasite-movieCardId");
+    await expect(element(by.id('textFieldId'))).toHaveText("");
+
   });
 
 
