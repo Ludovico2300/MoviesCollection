@@ -25,6 +25,23 @@ interface DataInterface {
 //@ts-ignore
 const MovieScreen = ({ navigation, route }) => {
   const layoutx = useWindowDimensions().width;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+useEffect(() => {
+    const getFavorites = async () => {
+        try {
+            const jsonValueFavorites = await AsyncStorage.getItem("fav");
+            let favMovies = [];
+            if (jsonValueFavorites) {
+                favMovies = JSON.parse(jsonValueFavorites);
+            }
+            setIsFavorite(containsObject(data, favMovies));
+        } catch (e) {
+            console.log(e);
+        }
+    };
+    getFavorites();
+}, []);
 
   const data: DataInterface = {
     id: route.params.id,
@@ -66,9 +83,11 @@ const MovieScreen = ({ navigation, route }) => {
       if (favMovies) {
         if (check === false) {
           favMovies.push(movie);
+          setIsFavorite(true);
           alert("Added to Favorites!");
           await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
         } else {
+          setIsFavorite(false);
           alert("Removed from Favorites");
           for (let i = 0; i < favMovies?.length; i++) {
             if (favMovies[i].title === movie.title) {
@@ -96,11 +115,11 @@ const MovieScreen = ({ navigation, route }) => {
           testID="addFavoriteBtn"
         >
           {/* @ts-ignore */}
-          <AntDesign name='hearto' size={20} color={"black"}/>
+          <AntDesign name='hearto' size={20} color={isFavorite ? "red" : "black"}/>
         </TouchableOpacity>
       ),
     });
-  }, [navigation1]);
+  }, [navigation1, isFavorite]);
 
    //add "Back Arrow" to Movie Info Screen Header
    React.useLayoutEffect(() => {
