@@ -1,16 +1,8 @@
-import {
-  FlatList,
-  Text,
-  View,
-  ActivityIndicator,
-  TouchableOpacity,
-  TextInput
-} from "react-native";
+import {FlatList,Text,View,ActivityIndicator,TouchableOpacity,TextInput} from "react-native";
 import React, { useState, useEffect } from "react";
-
 import MovieCard from "../components/MovieCard";
-
 import { useNavigation } from "@react-navigation/native";
+import { useStore } from "../store";
 
 interface Movie{
   index?: number;
@@ -21,6 +13,7 @@ interface Movie{
 }
 
 const HomeScreen = () => {
+  const[state, actions]=useStore();
   const [movies, setMovies] = useState<any|Movie[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -52,10 +45,10 @@ const HomeScreen = () => {
   const loadMoreItem = () => {
     console.log("load more");
     console.log(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${currentPage}`,
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${state.page}`,
     );
     fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${currentPage}`,
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${state.page}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -66,12 +59,12 @@ const HomeScreen = () => {
   //fine infinite loop
 
   const onBottomReached = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    actions.incrementPage;
   };
 
   useEffect(() => {
     loadMoreItem();
-  }, [currentPage]); //per evitare l'errore del caricamento dell'app prima del fetch
+  }, [state.page]); //per evitare l'errore del caricamento dell'app prima del fetch
 
   //creo il render item per poter usare FlatList
   const renderItem = ({ item }:{item:Movie}) => {
