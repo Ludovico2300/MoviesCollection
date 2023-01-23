@@ -1,4 +1,4 @@
-import {FlatList,Text,View,ActivityIndicator,TouchableOpacity,TextInput} from "react-native";
+import {FlatList,Text,View,ActivityIndicator,TouchableOpacity,TextInput, Button} from "react-native";
 import React, { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import { useNavigation } from "@react-navigation/native";
@@ -13,13 +13,14 @@ interface Movie{
 }
 
 const HomeScreen = () => {
-  const[state, actions]=useStore();
   const [movies, setMovies] = useState<any|Movie[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
   //filtro i film
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredFilms, setFilteredFilms] = useState(movies);
+
+  //zustand
+  const page = useStore((state)=>state.page)
+  const incrementPage = useStore((state)=>state.incrementPage)
 
   const navigation:any= useNavigation();
 
@@ -45,26 +46,26 @@ const HomeScreen = () => {
   const loadMoreItem = () => {
     console.log("load more");
     console.log(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${state.page}`,
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${page}`,
     );
     fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${state.page}`,
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${page}`,
     )
       .then((response) => response.json())
       .then((data) => {
-        setMovies((prevMovies:Movie[]) => [...prevMovies, ...data.results]); //quando viene caricata la nuova pagina, perdo dei dettagli di film, probabilmente il fetch è più veloce del render
+        setMovies((prevMovies:Movie[]) => [...prevMovies, ...data.results]);
       });
   };
 
   //fine infinite loop
 
   const onBottomReached = () => {
-    actions.incrementPage;
+    incrementPage()
   };
 
   useEffect(() => {
     loadMoreItem();
-  }, [state.page]); //per evitare l'errore del caricamento dell'app prima del fetch
+  }, [page]); //per evitare l'errore del caricamento dell'app prima del fetch
 
   //creo il render item per poter usare FlatList
   const renderItem = ({ item }:{item:Movie}) => {
@@ -96,16 +97,18 @@ const HomeScreen = () => {
 
   return (
     <View className="flex" testID="homeViewId">
+      <Text>{page}</Text>
+      <Button title="Increment" onPress={incrementPage} />
 
-<TextInput
+      <TextInput
         placeholder="Search for a film..."
         onChangeText={handleSearch}
         value={searchTerm}
         testID="textFieldId"
       />
-<View>
 
-      <FlatList
+      <View>
+        <FlatList
         testID="homeFlatListId"
         data={filteredFilms}
         renderItem={renderItem}
@@ -114,7 +117,7 @@ const HomeScreen = () => {
         ListFooterComponent={renderLoader}
         onEndReached={onBottomReached}
         onEndReachedThreshold={0}
-      />
+        />
       </View>
     </View>
   );

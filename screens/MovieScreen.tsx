@@ -115,7 +115,7 @@ useEffect(() => {
           testID="addFavoriteBtn"
         >
           {/* @ts-ignore */}
-          <AntDesign name='hearto' size={20} color={isFavorite ? "red" : "black"}/>
+          <AntDesign name='heart' size={20} color={isFavorite ? "red" : "black"}/>
         </TouchableOpacity>
       ),
     });
