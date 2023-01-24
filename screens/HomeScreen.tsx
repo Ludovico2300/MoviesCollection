@@ -4,7 +4,7 @@ import MovieCard from "../components/MovieCard";
 import { useNavigation } from "@react-navigation/native";
 import { useStore } from "../store";
 
-interface Movie{
+export interface Movie{
   index?: number;
   id: number;
   title: string;
@@ -13,16 +13,25 @@ interface Movie{
 }
 
 const HomeScreen = () => {
-  const [movies, setMovies] = useState<any|Movie[]>([]);
-  //filtro i film
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredFilms, setFilteredFilms] = useState(movies);
-
   //zustand
-  const page = useStore((state)=>state.page)
-  const incrementPage = useStore((state)=>state.incrementPage)
+  // const page = useStore((state)=>state.page)
+  // const incrementPage = useStore((state)=>state.incrementPage)
+  // const movies = useStore((state)=>state.movies)
+  // const setMovies = useStore((state)=>state.setMovies)
+
+  const {page, incrementPage, movies, appendMovies}= useStore();
+
+  // const [movies, setMovies] = useState<any|Movie[]>([]);
+   //filtro i film
+  const [filteredFilms, setFilteredFilms] = useState(movies);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navigation:any= useNavigation();
+
+  useEffect(() => {
+   console.log(movies);
+  }, [])
+  
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -45,15 +54,12 @@ const HomeScreen = () => {
 
   const loadMoreItem = () => {
     console.log("load more");
-    console.log(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${page}`,
-    );
     fetch(
       `https://api.themoviedb.org/3/movie/top_rated?api_key=a74169393e0da3cfbc2c58c5feec63d7&page=${page}`,
     )
       .then((response) => response.json())
       .then((data) => {
-        setMovies((prevMovies:Movie[]) => [...prevMovies, ...data.results]);
+        appendMovies(data.results);
       });
   };
 
@@ -83,7 +89,7 @@ const HomeScreen = () => {
   //inizio funzione filtro film
   useEffect(() => {
     setFilteredFilms(
-      movies.filter((movie: Movie) =>
+      movies?.filter((movie: Movie) =>
         movie.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
@@ -110,7 +116,7 @@ const HomeScreen = () => {
       <View>
         <FlatList
         testID="homeFlatListId"
-        data={filteredFilms}
+        data={movies}
         renderItem={renderItem}
         //@ts-ignore
         keyExtractor={item=> item.id} //errore ts, non capisco

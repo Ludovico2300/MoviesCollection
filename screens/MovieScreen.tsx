@@ -9,6 +9,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 //per risolvere can't find variable:navigation
 import { useNavigation } from "@react-navigation/native";
+import { useStoreFav } from "../store";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -27,10 +28,13 @@ const MovieScreen = ({ navigation, route }) => {
   const layoutx = useWindowDimensions().width;
   const [isFavorite, setIsFavorite] = useState(false);
 
+  const {favoritesMovies, appendFavMovies}= useStoreFav();
+
+
 useEffect(() => {
     const getFavorites = async () => {
         try {
-            const jsonValueFavorites = await AsyncStorage.getItem("fav");
+            const jsonValueFavorites = await AsyncStorage.getItem("favorites");
             let favMovies = [];
             if (jsonValueFavorites) {
                 favMovies = JSON.parse(jsonValueFavorites);
@@ -72,7 +76,7 @@ useEffect(() => {
   //@ts-ignore
   const storeData = async (movie) => {
     try {
-      const jsonValueFavorites = await AsyncStorage.getItem("fav");
+      const jsonValueFavorites = await AsyncStorage.getItem("favorites");
       console.log(movie.typeof);
       let favMovies : DataInterface[]= [];
       if (jsonValueFavorites) {
@@ -81,11 +85,12 @@ useEffect(() => {
       let check : boolean= containsObject(movie, favMovies);
       console.log(check);
       if (favMovies) {
+        console.log(favoritesMovies, movie)
         if (check === false) {
           favMovies.push(movie);
           setIsFavorite(true);
           alert("Added to Favorites!");
-          await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+          await AsyncStorage.setItem("favorites", JSON.stringify(favMovies));
         } else {
           setIsFavorite(false);
           alert("Removed from Favorites");
@@ -94,7 +99,7 @@ useEffect(() => {
               //controllo se il titolo del film è uguale all'elemento nel loop
               console.log(favMovies[i].title);
               favMovies.splice(i, 1); //partendo dall'indice di ricerca (primo parametro) rimuovi 1 elemento (secondo parametro)
-              await AsyncStorage.setItem("fav", JSON.stringify(favMovies));
+              await AsyncStorage.setItem("favorites", JSON.stringify(favMovies));
             }
           }
         }

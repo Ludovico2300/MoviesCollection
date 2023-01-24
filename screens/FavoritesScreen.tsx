@@ -19,7 +19,7 @@ const FavoritesScreen = () => {
 
   const getFavorites = async () => {
     try {
-      const jsonValue : string|any = await AsyncStorage.getItem("fav");
+      const jsonValue : string|any = await AsyncStorage.getItem("favorites");
       // console.log(typeof(jsonValue)); //string
       setFavorites(JSON.parse(jsonValue));
     } catch (e) {
