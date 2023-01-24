@@ -116,7 +116,7 @@ const HomeScreen = () => {
       <View>
         <FlatList
         testID="homeFlatListId"
-        data={movies}
+        data={filteredFilms}
         renderItem={renderItem}
         //@ts-ignore
         keyExtractor={item=> item.id} //errore ts, non capisco

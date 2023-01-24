@@ -28,18 +28,15 @@ const MovieScreen = ({ navigation, route }) => {
   const layoutx = useWindowDimensions().width;
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const {favoritesMovies, appendFavMovies}= useStoreFav();
+  const {favoritesMovies, addFavMovies, removeFavMovies}= useStoreFav();
+
+  
 
 
 useEffect(() => {
     const getFavorites = async () => {
         try {
-            const jsonValueFavorites = await AsyncStorage.getItem("favorites");
-            let favMovies = [];
-            if (jsonValueFavorites) {
-                favMovies = JSON.parse(jsonValueFavorites);
-            }
-            setIsFavorite(containsObject(data, favMovies));
+            setIsFavorite(containsObject(data, favoritesMovies));
         } catch (e) {
             console.log(e);
         }
@@ -76,32 +73,20 @@ useEffect(() => {
   //@ts-ignore
   const storeData = async (movie) => {
     try {
-      const jsonValueFavorites = await AsyncStorage.getItem("favorites");
-      console.log(movie.typeof);
-      let favMovies : DataInterface[]= [];
-      if (jsonValueFavorites) {
-        favMovies = JSON.parse(jsonValueFavorites);
-      }
-      let check : boolean= containsObject(movie, favMovies);
+      let check : boolean= containsObject(movie, favoritesMovies);
       console.log(check);
-      if (favMovies) {
-        console.log(favoritesMovies, movie)
-        if (check === false) {
-          favMovies.push(movie);
+      if (favoritesMovies) {
+        if (check === false) 
+        {
           setIsFavorite(true);
+          addFavMovies(movie)
           alert("Added to Favorites!");
-          await AsyncStorage.setItem("favorites", JSON.stringify(favMovies));
-        } else {
+        } 
+        else 
+        {
           setIsFavorite(false);
           alert("Removed from Favorites");
-          for (let i = 0; i < favMovies?.length; i++) {
-            if (favMovies[i].title === movie.title) {
-              //controllo se il titolo del film è uguale all'elemento nel loop
-              console.log(favMovies[i].title);
-              favMovies.splice(i, 1); //partendo dall'indice di ricerca (primo parametro) rimuovi 1 elemento (secondo parametro)
-              await AsyncStorage.setItem("favorites", JSON.stringify(favMovies));
-            }
-          }
+          removeFavMovies(movie)
         }
       }
     } catch (e) {

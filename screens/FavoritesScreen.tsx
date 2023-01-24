@@ -4,6 +4,7 @@ import MovieCard from "../components/MovieCard";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { useStoreFav } from "../store";
 
 interface Favorite{
   id: number;
@@ -17,18 +18,11 @@ const FavoritesScreen = () => {
   const [getted, setGetted] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const getFavorites = async () => {
-    try {
-      const jsonValue : string|any = await AsyncStorage.getItem("favorites");
-      // console.log(typeof(jsonValue)); //string
-      setFavorites(JSON.parse(jsonValue));
-    } catch (e) {
-      console.log(e);
-    }
-  };
+
+const{favoritesMovies, addFavMovies}=useStoreFav();
+
 
   useEffect(() => {
-    getFavorites();
     setGetted(true);
     setRefreshing(false);
   }, [getted, refreshing]);
@@ -72,18 +66,17 @@ const FavoritesScreen = () => {
     <View
     testID="favoritesViewId"
     >
-        {// se favorites ha dati esegue il flatlist, altrimenti il text
-        favorites ? 
+       
         <FlatList
         testID="favoritesFlatListId"
-        data={favorites}
+        data={favoritesMovies}
         renderItem={renderItem}
+        //@ts-ignore
         keyExtractor={item => item.id}
         refreshing={refreshing}
         onRefresh={handleRefresh}
       /> 
-      : <Text className="font-bold">No Favorites...</Text>
-      }
+    
       
     </View>
   );
