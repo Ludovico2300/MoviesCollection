@@ -1,4 +1,5 @@
-//questa è una funzione che racchiude una parte di test, alla quale si pososno passare parametri
+//questa è una funzione che racchiude una parte di test, 
+// alla quale si possono passare parametri
 async function elementIdIsVisible(elId) {
   const el = element(by.id(elId));
   await expect(el).toBeVisible();
@@ -13,6 +14,28 @@ async function filterElement(search, searchId) {
   await expect(element(by.id('homeViewId'))).toBeVisible();
   await element(by.id('textFieldId')).typeText(search);
   await expect(element(by.id(searchId))).toBeVisible();
+}
+
+async function addElementFavorite(searchId) {
+  await element(by.id(searchId)).tap(); 
+  await element(by.id('addFavoriteBtn')).tap();
+  await expect(element(by.text('Added to Favorites!'))).toBeVisible();
+  await element(by.text('OK')).tap();
+}
+
+
+async function addElementFavorite2(searchId, searchLbl) {
+  await element(by.id(searchId).and(by.label(searchLbl))).tap(); 
+  await element(by.id('addFavoriteBtn')).tap();
+  await expect(element(by.text('Added to Favorites!'))).toBeVisible();
+  await element(by.text('OK')).tap();
+}
+
+async function removeElementFavorite2(searchId, searchLbl) {
+  await element(by.id(searchId).and(by.label(searchLbl))).tap(); 
+  await element(by.id('addFavoriteBtn')).tap();
+  await expect(element(by.text('Removed from Favorites'))).toBeVisible();
+  await element(by.text('OK')).tap();
 }
 
 
@@ -47,31 +70,29 @@ async function filterElement(search, searchId) {
 //   });
 
 
-//   //i test con lo sroll non funzionano con il TextInput, non esegue lo scroll ????
+//   // i test con lo sroll non funzionano con il TextInput, non esegue lo scroll ????
 
+//   // it('should check if "The Godfather" Card is not visible when scrolling', async () => {
+//   //   // await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
+//   //   await expect(element(by.id('homeFlatListId'))).toBeVisible();
+//   //   await element(by.id('homeFlatListId')).scroll(150, 'down');
+//   //   await expect(element(by.id('The Godfather-movieViewId'))).not.toBeVisible();
+//   // });
 
-//   it('should check if "The Godfather" Card is not visible when scrolling', async () => {
-//     // await expect(element(by.id('The Godfather-movieViewId'))).toBeVisible();
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await element(by.id('homeFlatListId')).scroll(150, 'down');
-//     await expect(element(by.id('The Godfather-movieViewId'))).not.toBeVisible();
-//   });
+//   // it('should check if "Spirited Away" Card is visible when scrolling', async () => {
+//   //   await expect(element(by.text('Spirited Away'))).not.toBeVisible();
+//   //   await expect(element(by.id('homeFlatListId'))).toBeVisible();
+//   //   await element(by.id('homeFlatListId')).scroll(350, 'down');
+//   //   await expect(element(by.text('Spirited Away'))).toBeVisible();
+//   // });  
 
-//   it('should check if "Spirited Away" Card is visible when scrolling', async () => {
-//     await expect(element(by.text('Spirited Away'))).not.toBeVisible();
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await element(by.id('homeFlatListId')).scroll(350, 'down');
-//     await expect(element(by.text('Spirited Away'))).toBeVisible();
-//   });  
-
-//   it('should check if Movies are fetched when scrolling bottom', async () => {
-//     await expect(element(by.text('Cinema Paradiso'))).not.toBeVisible();
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await waitFor(element(by.text('Cinema Paradiso'))).toBeVisible().whileElement(by.id('homeFlatListId')).scroll(300, 'down');
-//   });  
+//   // it('should check if Movies are fetched when scrolling bottom', async () => {
+//   //   await expect(element(by.text('Cinema Paradiso'))).not.toBeVisible();
+//   //   await expect(element(by.id('homeFlatListId'))).toBeVisible();
+//   //   await waitFor(element(by.text('Cinema Paradiso'))).toBeVisible().whileElement(by.id('homeFlatListId')).scroll(300, 'down');
+//   // });  
 
 // });
-
 
 
 // describe('Favorites Test', () => {
@@ -89,11 +110,7 @@ async function filterElement(search, searchId) {
 //   });
 
 //   it('should show and confirm alert "Added to Favorites!" after tap', async () => {
-//     await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
-//     //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
-//     await element(by.id('addFavoriteBtn')).tap();
-//     await expect(element(by.text('Added to Favorites!'))).toBeVisible();
-//     await element(by.text('OK')).tap();
+//     await addElementFavorite2("The Godfather-movieCardId","The Godfather-movieCardLbl");
 //   });
 
 //   it('should show The Godfather in Favorites Screen after tap', async () => {
@@ -104,11 +121,7 @@ async function filterElement(search, searchId) {
 
 
 //   it('should show and confirm alert "Removed from Favorites" after tap', async () => {
-//     await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
-//     //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
-//     await element(by.id('addFavoriteBtn')).tap();
-//     await expect(element(by.text('Removed from Favorites'))).toBeVisible();
-//     await element(by.text('OK')).tap();
+//     await removeElementFavorite2("The Godfather-movieCardId","The Godfather-movieCardLbl");
 //   });
 
 //   it('should not show The Godfather in Favorites Screen after tap', async () => {
@@ -117,43 +130,44 @@ async function filterElement(search, searchId) {
 //     await expect(element(by.text('The Godfather'))).not.toExist();
 //   });
 
-//   it('should show and confirm alert "Added to Favorites!" after tap (Spirited Away)', async () => {
-//     await expect(element(by.id('homeFlatListId'))).toBeVisible();
-//     await element(by.id('homeFlatListId')).scroll(350, 'down');
-//     await expect(element(by.text('Spirited Away'))).toBeVisible();
-//     await element(by.id('Spirited Away-movieCardId').and(by.label('Spirited Away-movieCardLbl'))).tap(); 
-//     //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
-//     await element(by.id('addFavoriteBtn')).tap();
-//     await expect(element(by.text('Added to Favorites!'))).toBeVisible();
-//     await element(by.text('OK')).tap();
-//   });
 
-//   it('should show and confirm alert "Added to Favorites!" after tap(The Godfather)', async () => {
-//     await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
-//     //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
-//     await element(by.id('addFavoriteBtn')).tap();
-//     await expect(element(by.text('Added to Favorites!'))).toBeVisible();
-//     await element(by.text('OK')).tap();
-//   });
+//   //test con scroll, non funziona con text input, disattivato
 
-//   it('should remove The Godfather from FavoriteList and refresh the screen', async () => {
-//     await element(by.id('favoritesButtonID')).tap();
-//     await expect(element(by.id('favoritesViewId'))).toExist();
-//     await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
-//     //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
-//     await element(by.id('addFavoriteBtn')).tap();
-//     await expect(element(by.text('Removed from Favorites'))).toBeVisible();
-//     await element(by.text('OK')).tap();
-//     await element(by.id('goBackBtn')).tap();
-//     await expect(element(by.id('favoritesFlatListId'))).toBeVisible();
-//     await element(by.id('favoritesFlatListId')).swipe("down","slow", NaN, 0.5, 0.8);
-//     await expect(element(by.text('The Godfather'))).not.toExist();
-//   });
+//   // it('should show and confirm alert "Added to Favorites!" after tap (Spirited Away)', async () => {
+//   //   await expect(element(by.id('homeFlatListId'))).toBeVisible();
+//   //   await element(by.id('homeFlatListId')).scroll(350, 'down');
+//   //   await expect(element(by.text('Spirited Away'))).toBeVisible();
+//   //   await element(by.id('Spirited Away-movieCardId').and(by.label('Spirited Away-movieCardLbl'))).tap(); 
+//   //   //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
+//   //   await element(by.id('addFavoriteBtn')).tap();
+//   //   await expect(element(by.text('Added to Favorites!'))).toBeVisible();
+//   //   await element(by.text('OK')).tap();
+//   // });
+
+//   // it('should show and confirm alert "Added to Favorites!" after tap(The Godfather)', async () => {
+//   //   await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
+//   //   //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
+//   //   await element(by.id('addFavoriteBtn')).tap();
+//   //   await expect(element(by.text('Added to Favorites!'))).toBeVisible();
+//   //   await element(by.text('OK')).tap();
+//   // });
+
+//   // it('should remove The Godfather from FavoriteList and refresh the screen', async () => {
+//   //   await element(by.id('favoritesButtonID')).tap();
+//   //   await expect(element(by.id('favoritesViewId'))).toExist();
+//   //   await element(by.id('The Godfather-movieCardId').and(by.label('The Godfather-movieCardLbl'))).tap(); 
+//   //   //gli attributi ricercati con "and" devono essere assegnati allo stesso elemento!!!
+//   //   await element(by.id('addFavoriteBtn')).tap();
+//   //   await expect(element(by.text('Removed from Favorites'))).toBeVisible();
+//   //   await element(by.text('OK')).tap();
+//   //   await element(by.id('goBackBtn')).tap();
+//   //   await expect(element(by.id('favoritesFlatListId'))).toBeVisible();
+//   //   await element(by.id('favoritesFlatListId')).swipe("down","slow", NaN, 0.5, 0.8);
+//   //   await expect(element(by.text('The Godfather'))).not.toExist();
+//   // });
   
 
 // });
-
-
 
 
 describe('Filter Test', () => {
@@ -176,6 +190,27 @@ describe('Filter Test', () => {
     await element(by.id('textFieldId')).clearText();
     await elementIdIsNotVisible("Parasite-movieCardId");
     await expect(element(by.id('textFieldId'))).toHaveText("");
+  });
+
+
+});
+
+
+describe('Async Test', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+  it('add film Fav-->Reload App-->still show film in fav', async () => {
+    await addElementFavorite2("The Godfather-movieCardId", "The Godfather-movieCardLbl");
+    await device.reloadReactNative();
+    await element(by.id('favoritesButtonID')).tap();
+    await expect(element(by.id('favoritesViewId'))).toBeVisible();
+    await elementIdIsVisible("The Godfather-movieCardId");
   });
 
 
