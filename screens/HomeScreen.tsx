@@ -13,12 +13,6 @@ export interface Movie{
 }
 
 const HomeScreen = () => {
-  //zustand
-  // const page = useStore((state)=>state.page)
-  // const incrementPage = useStore((state)=>state.incrementPage)
-  // const movies = useStore((state)=>state.movies)
-  // const setMovies = useStore((state)=>state.setMovies)
-
   const {page, incrementPage, movies, appendMovies}= useStore();
 
   // const [movies, setMovies] = useState<any|Movie[]>([]);
@@ -32,7 +26,6 @@ const HomeScreen = () => {
    console.log(movies);
   }, [])
   
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -103,14 +96,13 @@ const HomeScreen = () => {
 
   return (
     <View className="flex" testID="homeViewId">
-      <Text>{page}</Text>
-      <Button title="Increment" onPress={incrementPage} />
 
       <TextInput
         placeholder="Search for a film..."
         onChangeText={handleSearch}
         value={searchTerm}
         testID="textFieldId"
+        className="text-center font-bold"
       />
 
       <View>
