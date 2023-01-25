@@ -25,8 +25,20 @@ export const useStore = create<MovieState>(
     (set) => ({
   page: 1,
   movies: [],
-  incrementPage: () => set((state) => ({ page: state.page + 1 })),
-  appendMovies: (movies) => set((state) => ({ movies: [...state.movies, ...movies] })),
+
+  incrementPage:()=>set( produce((state) => {
+    return {
+      page: state.page + 1
+    }
+  })),
+
+  appendMovies: (movies) => set( produce((state: MovieState) => {
+    return {
+      movies: [...state.movies, ...movies]
+    }
+  }),
+),
+
   emptyMovies: ()=>set(produce((state)=>{
     state.movies= []
   }))
