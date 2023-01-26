@@ -65,8 +65,9 @@ const{favoritesMovies, addFavMovies}=useStoreFav();
   return (
     <View
     testID="favoritesViewId"
-    >
-       
+    >      
+       {favoritesMovies.length > 0
+       ? 
         <FlatList
         testID="favoritesFlatListId"
         data={favoritesMovies}
@@ -76,6 +77,9 @@ const{favoritesMovies, addFavMovies}=useStoreFav();
         refreshing={refreshing}
         onRefresh={handleRefresh}
       /> 
+      :
+      <Text testID="favoritesFlatListId">No Favorites yet</Text>
+      }
     
       
     </View>
