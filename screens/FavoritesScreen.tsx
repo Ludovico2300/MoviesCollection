@@ -78,7 +78,11 @@ const{favoritesMovies, addFavMovies}=useStoreFav();
         onRefresh={handleRefresh}
       /> 
       :
-      <Text testID="favoritesFlatListId">No Favorites yet</Text>
+      <View testID="favoritesFlatListId" className="h-screen flex-auto items-center justify-center">
+        <Text className="font-bold text-3xl">No Favorites yet!</Text>
+        <Text className="text-lg my-10">To add your favorites, tap the heart button!</Text>
+      </View>
+      
       }
     
       
